@@ -1,0 +1,24 @@
+.calendar-space{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 25rem;
+    text-align: center;
+}
+.calendar-space > .title{
+    text-align: right;
+}
+.calendar-space > .time-check{
+    display: flex;
+    justify-content: space-around;
+}
+.calendar-space > .time-check > span,.calendar-space > .time-check > select{
+    width: 4rem;
+}
+.calendar-space > .week,.calendar-space > .date{
+    display: flex;
+    justify-content: space-between;
+}
+.calendar-space .cell{
+    width: 2rem;
+}
