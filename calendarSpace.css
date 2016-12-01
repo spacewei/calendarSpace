@@ -21,11 +21,13 @@
 }
 .calendar-space .cell{
     width: 3rem;
-    margin-left: 0;
-    margin-right: 0;
+    margin: 0.5rem 0 0.5rem 0;
 }
 .calendar-space > .date-show{
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+}
+.calendar-space .cell-virtual{
+    color: gray;
 }
