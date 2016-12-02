@@ -15,11 +15,15 @@
 .calendar-space > .time-check > span,.calendar-space > .time-check > select{
     width: 4rem;
 }
+.calendar-space > .title,.calendar-space > .time-check,.calendar-space > .week{
+    height: 2rem;
+}
 .calendar-space > .week,.calendar-space > .date{
     display: flex;
     justify-content: center;
 }
 .calendar-space .cell{
+    box-sizing: border-box;
     width: 3rem;
     margin: 0.5rem 0 0.5rem 0;
 }

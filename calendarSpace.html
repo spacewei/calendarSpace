@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>日历组件</title>
-    <link rel="stylesheet" href="calendarSpace.css">
     <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
-    <script src="calendarSpace.js"></script>
+    <link rel="stylesheet" href="calendarSpace.css">
 </head>
 <body>
 <div>
     <div class="calendar-space">
         <div class="title"><span class="login-out">退出</span></div>
         <div class="time-check">
-            <span>back</span>
+            <span><canvas class="canvas-backward"></canvas></span>
             <select class="select-year"></select>
             <select class="select-month"></select>
-            <span>forward</span>
+            <span><canvas class="canvas-forward"></canvas></span>
         </div>
         <div class="week">
             <span class="cell week0">日</span>
@@ -29,5 +28,6 @@
         <div class="date-show"></div>
     </div>
 </div>
+<script src="calendarSpace.js"></script>
 </body>
 </html>
