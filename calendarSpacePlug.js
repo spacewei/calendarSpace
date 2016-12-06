@@ -4,7 +4,8 @@
 ;(function($){//;用于防止之前引入的js文件没有;结尾,用立即执行匿名函数封装
     /*日历插件的构造函数*/
     var calendarSpacePlug = function(type,calendarSite) {
-        this.calendarPlug(type,calendarSite)
+        this.date = this.calendarPlug(type,calendarSite);
+        this.getCalendarSpaceDate();
     };
     /*构造函数的原型,共用calendarPlug*/
     calendarSpacePlug.prototype = {
@@ -12,6 +13,8 @@
         constructor:calendarSpacePlug,
         /*主函数,内部的函数要共用作用域*/
         calendarPlug:function(type,calendarSite){
+            //要返回的变量
+            var returnDate = {};
             /*修饰函数,用type选择日历的类型:Toggle可关闭,Show只显示*/
             var calendarType = function(type,calendarSite){
                 if (type === 'Toggle'){
@@ -23,24 +26,34 @@
             };
             /*修饰函数,增加可关闭功能*/
             var calendarToggle = function (calendarSite) {
-                var calendarToggleBtn = $('.calendar-space-toggle');
-                var calendarToggleSiteJQ = $(calendarSite);
+                var calendarToggleBtn = $(calendarSite+'.calendar-space-toggle').eq(0);
+                var calendarToggleSiteJQ = $(calendarSite+'.calendar-space-view').eq(0);
                 calendarToggleBtn.css('cursor', 'pointer');
+                //创建日历的目标DOM
+                calendarSite = calendarSite+'.calendar-space-view';
+                //创建日历
+                calendarInit(calendarSite);
+                var calendar = $(calendarSite);
+                calendar.css('display','none');
+                //日历显示按钮监听事件
                 calendarToggleBtn.on('click', function () {
-                    if (calendarToggleSiteJQ.get(0).innerHTML) {
-                        //日历建立目标DOM内有元素,则清空DOM,且移除一个css
-                        calendarToggleSiteJQ.empty();
+                    if(calendar.css('display') === 'block'){
+                        //日历建立目标DOM内日历显示,则隐藏,且移除一个css
+                        calendar.css('display','none');
                         $('head link[href="calendarSpace.css"]').eq(0).remove();
                     } else {
-                        //日历建立目标DOM内无元素,建立日历并引入css
+                        //日历建立目标DOM内日历隐藏,建立日历并引入css
                         $('head').append('<link rel="stylesheet" href="calendarSpace.css">');
-                        calendarInit(calendarSite);
+                        calendar.css('display','block');
                     }
-                })
+                });
             };
             /*修饰函数,只显示式日历,一次加载一个css*/
             var calendarShow = function(calendarSite){
                 $('head').append('<link rel="stylesheet" href="calendarSpace.css">');
+                //创建日历的目标DOM
+                calendarSite = calendarSite+'.calendar-space-view';
+                //创建日历
                 calendarInit(calendarSite);
             };
             /*日历初始化,原来的主函数*/
@@ -266,6 +279,8 @@
                 dateCll.dateNextCellJQ = $(calendarSite+' .date-next');
                 //初始化时红框日期(今天),监听点击date时红框该date
                 highLightDate(timeObj, showJQ, dateCll,calendarSite);
+                //返回渲染后的日期
+                returnDate = timeObj;
             };
             /*初始化时红框日期(今天),监听点击date时红框该date*/
             var highLightDate = function (timeObj, showJQ, dateCll,calendarSite) {
@@ -287,6 +302,8 @@
                         dateCll.dateThisCellJQ.eq(timeObj.date - 1).css('border', '1px solid transparent');
                         timeObj.date = Number(dateThis);
                         dateThisJQ.css('border', '1px solid red');
+                        //返回点选后的日期
+                        returnDate = timeObj;
                     }
                 });
             };
@@ -393,11 +410,31 @@
             };
             //运行日历类型选择
             calendarType(type,calendarSite);
+            //返回主函数结束后的日期
+            return returnDate;
+        },
+        getCalendarSpaceDate:function(){
+            return this.date;
         }
     };
     //在全局作用域中注册calendarSpacePlug!不然外界无法访问匿名立即执行函数中任何对象及基本数据!
     window['calendarSpacePlug'] = calendarSpacePlug;
 })(jQuery);
 //new出实例,使用插件!
-var xxx1 = new calendarSpacePlug('Show','.calendar-space-there2');
-var xxx2 = new calendarSpacePlug('Toggle','.calendar-space-there1');
+var xxx11 = new calendarSpacePlug('Show','.calendar-space-there21');
+console.log('xxx11:');
+console.log(xxx11.getCalendarSpaceDate());
+var xxx12 = new calendarSpacePlug('Show','.calendar-space-there22');
+console.log('xxx12:');
+console.log(xxx12.getCalendarSpaceDate());
+var xxx13 = new calendarSpacePlug('Show','.calendar-space-there23');
+
+var xxx21 = new calendarSpacePlug('Toggle','.calendar-space-there11');
+console.log('-------------------');
+console.log('xxx21:');
+console.log(xxx21.getCalendarSpaceDate());
+var xxx22 = new calendarSpacePlug('Toggle','.calendar-space-there12');
+console.log('xxx22:');
+console.log(xxx22.getCalendarSpaceDate());
+console.log('-------------------');
+var xxx23 = new calendarSpacePlug('Toggle','.calendar-space-there13');
